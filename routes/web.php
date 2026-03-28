@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,6 +11,20 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+
+Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+
+Route::get('/qr-code', function () {
+    return view('qr-code.index');
+})->middleware(['auth', 'verified'])->name('qr-code.index');
+
+Route::get('/cabinet-access-guide', function () {
+    return view('cabinet-access-guide.index');
+})->middleware(['auth', 'verified'])->name('cabinet-access-guide.index');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
